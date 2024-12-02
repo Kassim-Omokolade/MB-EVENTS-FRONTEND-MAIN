@@ -14,6 +14,7 @@ const CreateEvent = () => {
   const [tagInput, setTagInput] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
+    title:"",
     date: "",
     startTime: "",
     endTime: "",
@@ -70,7 +71,7 @@ const CreateEvent = () => {
     }
 
     // Append the tags array as a stringified JSON
-    formDataToSend.append("tags", JSON.stringify(tags));
+    formDataToSend.append("tags", tags);
 
     // Append online and free fields
     formDataToSend.append("online", online);
@@ -134,7 +135,20 @@ const CreateEvent = () => {
               )}
             </div>
           </div>
-
+          {/* title */}
+          <div className="mt-3">
+            <label htmlFor="title" className="fomm-label fs-4 fw-semibold">
+              Title
+            </label>
+            <input
+              id="title"
+              style={{ width: "279px" }}
+              type="text"
+              required
+              placeholder="Event Title"
+              className="form-control bg-secondary-subtle py-2 shadow-none"
+            />
+          </div>
           {/* Date and Time */}
           <div className="mt-3">
             <label className="form-label fs-4 fw-semibold">
@@ -147,6 +161,7 @@ const CreateEvent = () => {
               <input
                 id="date"
                 type="date"
+                required
                 className="form-control shadow-none bg-secondary-subtle py-2"
                 name="date"
                 onChange={handleChange}
@@ -161,6 +176,7 @@ const CreateEvent = () => {
                 <input
                   id="start"
                   type="time"
+                  required
                   className="form-control shadow-none bg-secondary-subtle py-2"
                   name="startTime"
                   onChange={handleChange}
@@ -254,6 +270,7 @@ const CreateEvent = () => {
                   id="category"
                   className="form-select shadow-none border border-1 py-2"
                   name="category"
+                  required
                   onChange={handleChange}
                   style={{ width: "241px" }}
                 >
@@ -278,6 +295,7 @@ const CreateEvent = () => {
                     type="text"
                     className="form-control bg-secondary-subtle py-2 shadow-none"
                     placeholder="Type a tag"
+                    
                     value={tagInput}
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyDown={handleKeyDown}
