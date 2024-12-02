@@ -4,18 +4,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import ActionBtn from "../components/ActionBtn";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import logo from "../assets/logo.png";
-
+import axios from "axios";
 import { registerSchema } from "../utils/formValidator";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const toggleShow = () => setShow(!show);
   const toggleShow2 = () => setShow2(!show2);
+  const redirect =useNavigate()
 
   const {
     register,
@@ -25,10 +27,31 @@ const Register = () => {
   } = useForm({
     resolver: yupResolver(registerSchema),
   });
-
-  const onSubmit = (data) => {
+  //post request to our api
+  const url = "https://nb-event-server.onrender.com/api/v1/register";
+  const onSubmit = async (data) => {
     // Handle form submission logic here
-    console.log(data);
+    // console.log(data);
+    try {
+      const result = await axios.post(url, data);
+      console.log(result);
+      if (result.status === 201){
+        //toast a suuccess message
+        toast.success("User Created Successfully ", {
+          position: "top-center",
+        });
+        //redirect to login page
+        redirect("/login")
+      }
+     
+      
+    } catch (error) {
+      console.log(error?.response?.data?.message);
+      toast.error(error?.response?.data?.message,{
+        position:"top-center",
+        autoClose: 7000,
+      });
+    }
   };
 
   return (
@@ -132,6 +155,7 @@ const Register = () => {
           content={isSubmitting ? "Signing Up..." : "Sign Up"}
           type="submit"
           className="specialbtn"
+          disable={isSubmitting}
         />
 
         <h2 className="my-3 fs-6">
