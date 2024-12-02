@@ -54,7 +54,7 @@ const onSubmit = async (data) => {
         )}
         <ActionBtn
           width={"100%"}
-          content={ isSubmitting? "Resettting Password..." : "Reset Password"}
+          content={ isSubmitting? "Resetting Password..." : "Reset Password"}
           type="submit"
           className={isSubmitting?"mt-2 bg-secondary": "specialbtn mt-2"}
           disable={isSubmitting}
