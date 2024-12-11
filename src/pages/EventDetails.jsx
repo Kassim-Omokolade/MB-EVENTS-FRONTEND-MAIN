@@ -7,6 +7,7 @@ import axios, { Axios } from "axios";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const EventDetails = () => {
   const { ...all } = events[1];
@@ -19,17 +20,17 @@ const EventDetails = () => {
   const getEvent = async () => {
     try {
       const { data } = await axios(`${url}/${eventId}`);
-      console.log(data);
+      // console.log(data);
       setIsLoading(false);
       setEvent(data.event);
       setSimilarEvents(data.similarEvents);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   useEffect(() => {
     getEvent();
-  }, []);
+  }, [eventId]);
   if (isLoading) {
     return (
       <>
@@ -45,12 +46,12 @@ const EventDetails = () => {
       <Layout>
         <div className="container">
           <h3 className="my-4 fs-5">
-            Home {">"} Events {">"}{" "}
+            <Link to="/" className="text-dark text-decoration-none">Home</Link>{">"}   <Link to="/events" className="text-dark text-decoration-none">Events</Link> {">"}{" "}
             <span className="main-color">Event Details</span>
           </h3>
         </div>
         <EventProperties {...event} />
-        {similarEvents.length > 0 && <OthersLiked />}
+        {similarEvents.length > 0 && <OthersLiked similarEvents={similarEvents}/>}
       </Layout>
     </>
   );

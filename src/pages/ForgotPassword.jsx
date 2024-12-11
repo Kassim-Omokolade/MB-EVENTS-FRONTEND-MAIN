@@ -25,8 +25,8 @@ const onSubmit = async (data) => {
       toast.success("Password reset Link sent to your mail")
      }
    } catch (error) {
-     console.log(error);
-     console.log(error?.response?.data?.message);
+    //  console.log(error);
+    //  console.log(error?.response?.data?.message);
      toast.error(error?.response?.data?.message || error?.message, {
        position: "top-center",
        autoClose: 7000,
@@ -35,7 +35,7 @@ const onSubmit = async (data) => {
   };
   return (
     <div className="vh-100 d-flex justify-content-center align-items-center reset-container">
-      <form onSubmit={handleSubmit(onSubmit)} className="p-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="p-2 position-relative">
         <Link to="/">
           <img src={logo} alt="logo" className="d-block mx-auto my-2" />
         </Link>
@@ -54,9 +54,9 @@ const onSubmit = async (data) => {
         )}
         <ActionBtn
           width={"100%"}
-          content={ isSubmitting? "Resetting Password..." : "Reset Password"}
+          content={isSubmitting ? "Resetting Password..." : "Reset Password"}
           type="submit"
-          className={isSubmitting?"mt-2 bg-secondary": "specialbtn mt-2"}
+          className={isSubmitting ? "mt-2 bg-secondary" : "specialbtn mt-2"}
           disable={isSubmitting}
         />
       </form>
